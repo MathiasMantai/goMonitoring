@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<title>{{.Title}}</title>
 		<link rel="stylesheet" type="text/css" href="/css/output.css">
@@ -8,18 +8,34 @@
 		<div id="site-container" class="h-[100vdh] flex items-center justify-center">
 			<div class="min-w-[50dvw] min-h-[50dvh] bg-white rounded-lg shadow-md flex flex-col">
 				<header class="bg-sky-400 rounded-t-lg flex flex-row items-center px-6 gap-12 min-h-[8vh]">
-					<img src="/img/logo.png" width="64px" height="64px">
+					<img src="/img/logo.png" class="noselect" width="64px" height="64px">
 					<nav class="flex items-center min-h-[8vh]">
-						<a href="#" class="flex items-center justify-center min-h-[8vh] w-[8vh] hover:bg-sky-500"><img src="/img/package.svg" width="48"  class="p-2  h-full" ></a>
-						<a  href="#" class="flex items-center justify-center min-h-[8vh] w-[8vh] hover:bg-sky-500"><img src="/img/cpu.svg" width="48"   class="p-2  h-full"></a>
-						<a  href="#" class="flex items-center justify-center min-h-[8vh] w-[8vh] hover:bg-sky-500"><img src="/img/share-2.svg" width="48"   class="p-2  h-full"></a>
-						<a  href="#" class="flex items-center justify-center min-h-[8vh] w-[8vh] hover:bg-sky-500"><img src="/img/activity.svg" width="48"   class="p-2  h-full"></a>
-						<a  href="#" class="flex items-center justify-center min-h-[8vh] w-[8vh] hover:bg-sky-500"><img src="/img/settings.svg" width="48"   class="p-2  h-full"></a>
+						<a  href="/" class="flex items-center justify-center min-h-[8vh] w-[8vh] hover:bg-sky-500">
+							<img src="/img/cpu.svg" width="48"   class="p-2  h-full">
+						</a>
+						<a href="/container" class="flex items-center justify-center min-h-[8vh] w-[8vh] hover:bg-sky-500">
+							<img src="/img/package.svg" width="48"  class="p-2  h-full">
+						</a>
+						<a  href="/network" class="flex items-center justify-center min-h-[8vh] w-[8vh] hover:bg-sky-500">
+							<img src="/img/share-2.svg" width="48"   class="p-2  h-full"
+							>
+						</a>
+						<a  href="#" class="flex items-center justify-center min-h-[8vh] w-[8vh] hover:bg-sky-500">
+							<img src="/img/activity.svg" width="48"   class="p-2  h-full">
+						</a>
+						<a  href="#" class="flex items-center justify-center min-h-[8vh] w-[8vh] hover:bg-sky-500">
+							<img src="/img/settings.svg" width="48"   class="p-2  h-full">
+						</a>
 					</nav>
 				</header>
 				<main class="flex grow flex-row items-center justify-center">
-					<canvas id="chart" class="w-[6vw]"></canvas>
-					<canvas id="chart2" class="w-[6vw]"></canvas>
+					{{if eq .CurrentRoute "/"}}
+						{{template "cpu" .}}
+					{{else if eq .CurrentRoute "/container"}}
+						{{template "container" .}}
+					{{else if eq .CurrentRoute "/network"}}
+						{{template "network" .}}
+					{{end}}
 				</main>
 				<footer class="rounded-b-md px-6">
 								
@@ -28,5 +44,10 @@
 		</div>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 		<script src="/js/main.js" defer></script>
+		<script>
+			//toogle active link
+			let active = document.querySelector('a[href="{{.CurrentRoute}}"]')
+			active.classList.toggle("bg-sky-500")
+		</script>
 	</body>
 </html>
