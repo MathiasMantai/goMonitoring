@@ -1,5 +1,56 @@
 {{define "container"}}
-<div>
-    container page
+<div class="w-[100%]">
+    <table class="w-full text-sm text-left">
+        <thead>
+            <tr class="text-xs uppercase bg-sky-400 text-white">
+                <th class="px-6 py-3">
+                    Container Names
+                </th>
+                <th class="px-6 py-3">
+                    ID
+                </th>
+                <th class="px-6 py-3">
+                    Status
+                </th>
+                <th class="text-center">
+                    State
+                </th>
+                <th>
+                    
+                </th>
+                <th>
+                    
+                </th>
+            </tr>
+        </thead>
+        <tbody class="w-full">
+            {{range .Body}}
+                <tr class="hover:bg-slate-200 w-[100%]">
+                    <td class="px-6 py-3">
+                        <ul>
+                            {{range .Names}}
+                                <li>
+                                    {{.}}
+                                </li>
+                            {{end}}
+                        </ul>
+                    </td>
+                    <td class="px-6 py-3">
+                        {{.ID}}
+                    </td>
+                    <td class="px-6 py-3">
+                        {{.Status}}
+                    </td>
+                    <td class="flex justify-center items-center px-6 py-3 w-[100%] h-[100%]">
+                        {{if eq .State "running"}}
+                            <div class="rounded-full bg-green-500 w-[15px] h-[15px]"></div>
+                        {{else}}
+                            <div class="rounded-full bg-red-500 w-[15px] h-[15px]"></div>
+                        {{end}}
+                    </td>
+                </tr>
+            {{end}}
+        </tbody>
+    </table>
 </div>
 {{end}}

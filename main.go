@@ -10,6 +10,7 @@ import (
 	"html/template"
 	"net/http"
 	"fmt"
+	"github.com/mathiasmantai/goMonitoring/src"
 )
 
 const (
@@ -18,7 +19,7 @@ const (
 
 type PageData struct {
 	Title string
-	Body string
+	Body interface{}
 	CurrentRoute string
 }
 
@@ -38,6 +39,8 @@ func serveStaticFiles() {
 	pages := http.FileServer(http.Dir("./web/pages"))
 	http.Handle("/pages/", http.StripPrefix("/pages/", pages))
 }
+
+
 
 func main() {	
 
@@ -62,12 +65,13 @@ func main() {
 	http.HandleFunc("/container", func(w http.ResponseWriter, r *http.Request) {
 		data := PageData {
 			Title: "Monitoring",
-			Body: "Test",
+			Body: src.ContainerData(),
 			CurrentRoute: "/container",
 		}
 		renderTemplateWithContent(w, data, pages...)
 	})
 
+	//network route
 	http.HandleFunc("/network", func(w http.ResponseWriter, r *http.Request) {
 		data := PageData {
 			Title: "Monitoring",

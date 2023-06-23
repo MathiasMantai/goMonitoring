@@ -28,7 +28,7 @@
 						</a>
 					</nav>
 				</header>
-				<main class="flex grow flex-row items-center justify-center">
+				<main class="flex grow">
 					{{if eq .CurrentRoute "/"}}
 						{{template "cpu" .}}
 					{{else if eq .CurrentRoute "/container"}}
@@ -48,6 +48,9 @@
 			//toogle active link
 			let active = document.querySelector('a[href="{{.CurrentRoute}}"]')
 			active.classList.toggle("bg-sky-500")
+
+			//debugging: log request body
+			console.log("{{.Body}}")
 		</script>
 	</body>
 </html>
