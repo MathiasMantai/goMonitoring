@@ -36,10 +36,10 @@ let donutChart = new Chart(ctx, {
     options
 })
 
-getCpuUsage()
+getCpuData()
 
 setInterval(() => {
-    getCpuUsage()
+    getCpuData()
 },2000)
 
 
@@ -52,14 +52,14 @@ function updateChart(chart, newData)
     chart.update()
 }
 
-function getCpuUsage()
+function getCpuData()
 {
     fetch("/cpuUsage")
     .then(response => response.json())
     .then(
         (data) => {
-            data = data.toFixed(2)
             console.log(data)
+            cpu = data[0].toFixed(2)
             updateChart(donutChart, [parseFloat(100-data), data])
             cpuPercent.innerHTML = data + "%"
         }

@@ -8,6 +8,7 @@ import (
 	"github.com/docker/docker/api/types"
     "github.com/docker/docker/client"
 	"github.com/shirou/gopsutil/v3/cpu"
+	"github.com/shirou/gopsutil/v3/mem"
 )
 
 func SanitizeContainer(containers []types.Container) []types.Container{
@@ -25,16 +26,6 @@ func SanitizeContainer(containers []types.Container) []types.Container{
 	}
 
 	return containers
-}
-
-
-func CPUData(perCPU bool) float64 {
-	percent, err := cpu.Percent(time.Second, perCPU)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return percent[0]
 }
 
 func ContainerData() []types.Container {
@@ -55,4 +46,26 @@ func ContainerData() []types.Container {
 
 	//trim container id before returning
 	return SanitizeContainer(containers)
+}
+
+//Cpu usage
+func CPUData(perCPU bool) float64 {
+	percent, err := cpu.Percent(time.Second, perCPU)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return percent[0]
+}
+
+
+//Virtual Memory
+func VirtualMemory() {
+	memory, err := mem.VirtualMemory()
+
+	if err != nil {
+		log.Fatal("Error while accessing virtual memory diagnostics")
+	}
+
+	return memory.UsedPercent
 }

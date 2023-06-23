@@ -63,9 +63,10 @@ func main() {
 		renderTemplateWithContent(w, data, pages...)
 	})
 
-	http.HandleFunc("/cpuUsage", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/cpu", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
-		response, err := json.Marshal(src.CPUData(false))
+		data := [src.CPUData(false), src.VirtualMemory()]
+		response, err := json.Marshal(data)
 		if err != nil {
 			log.Fatal(err)
 		}
