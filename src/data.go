@@ -3,9 +3,11 @@ package src
 import (
 	"log"
 	"strings"
+	"time"
 	"golang.org/x/net/context"
 	"github.com/docker/docker/api/types"
     "github.com/docker/docker/client"
+	"github.com/shirou/gopsutil/v3/cpu"
 )
 
 func SanitizeContainer(containers []types.Container) []types.Container{
@@ -22,9 +24,17 @@ func SanitizeContainer(containers []types.Container) []types.Container{
 		}
 	}
 
-
-
 	return containers
+}
+
+
+func CPUData(perCPU bool) float64 {
+	percent, err := cpu.Percent(time.Second, perCPU)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return percent[0]
 }
 
 func ContainerData() []types.Container {

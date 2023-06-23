@@ -1,5 +1,9 @@
 {{define "cpu"}}
-<div>
-    cpu page
-</div>
+    <div class="w-fit border border-md rounded-md shadow-md p-3 inline-block">
+        <div class="flex items-center justify-center">
+            <canvas id="cpuUsage" class="h-[8dvh] w-[8dvw] grid z-20"></canvas>
+            <div id="cpuUsage-percent" class="grid absolute"></div>
+        </div>
+        <div class="text-center">CPU usage</div>
+    </div>
 {{end}}

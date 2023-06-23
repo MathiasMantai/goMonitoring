@@ -10,7 +10,9 @@ import (
 	"html/template"
 	"net/http"
 	"fmt"
+	"log"
 	"github.com/mathiasmantai/goMonitoring/src"
+	"encoding/json"
 )
 
 const (
@@ -55,10 +57,19 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		data := PageData {
 			Title: "Monitoring",
-			Body: "Test",
+			Body: "",
 			CurrentRoute: "/",
 		}
 		renderTemplateWithContent(w, data, pages...)
+	})
+
+	http.HandleFunc("/cpuUsage", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		response, err := json.Marshal(src.CPUData(false))
+		if err != nil {
+			log.Fatal(err)
+		}
+		w.Write(response)
 	})
 
 	//container route

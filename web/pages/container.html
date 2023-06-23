@@ -15,17 +15,11 @@
                 <th class="text-center">
                     State
                 </th>
-                <th>
-                    
-                </th>
-                <th>
-                    
-                </th>
             </tr>
         </thead>
         <tbody class="w-full">
             {{range .Body}}
-                <tr class="hover:bg-slate-200 w-[100%]">
+                <tr class="hover:bg-slate-200 border-b-2">
                     <td class="px-6 py-3">
                         <ul>
                             {{range .Names}}
@@ -41,11 +35,11 @@
                     <td class="px-6 py-3">
                         {{.Status}}
                     </td>
-                    <td class="flex justify-center items-center px-6 py-3 w-[100%] h-[100%]">
+                    <td class="flex justify-center items-center px-6 py-3">
                         {{if eq .State "running"}}
-                            <div class="rounded-full bg-green-500 w-[15px] h-[15px]"></div>
+                            <span class="rounded-full bg-green-500 w-[15px] h-[15px]"></span>
                         {{else}}
-                            <div class="rounded-full bg-red-500 w-[15px] h-[15px]"></div>
+                            <span class="rounded-full bg-red-500 w-[15px] h-[15px]"></span>
                         {{end}}
                     </td>
                 </tr>
