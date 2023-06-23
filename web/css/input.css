@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body 
+{
+
+}
+
+main 
+{
+
+}
+
+footer 
+{
+
+}
+
+#site-container
+{
+    height: 100vh;
+}

@@ -22,13 +22,24 @@ func main() {
 			Title: "Monitoring",
 			Body: "Test",
 		}
-
 		renderTemplate(w, "web/index.html", data)
 	})
 
 	//serve css
 	styles := http.FileServer(http.Dir("./web/css"))
 	http.Handle("/css/", http.StripPrefix("/css/", styles))
+
+	//serve javascript
+	js := http.FileServer(http.Dir("./web/js"))
+	http.Handle("/js/", http.StripPrefix("/js/", js))
+
+	//serve images
+	img := http.FileServer(http.Dir("./web/img"))
+	http.Handle("/img/", http.StripPrefix("/img/", img))
+
+	//serve external libraries
+	img := http.FileServer(http.Dir("./web/img"))
+	http.Handle("/img/", http.StripPrefix("/img/", img))
 
 	fmt.Println("starting webserver on port " + port)
 	http.ListenAndServe(":" + port, nil)
