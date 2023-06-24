@@ -1,4 +1,5 @@
 # goMonitoring
+![Screenshot](screenshots/screen_01.png)
 
 This is a web based monitoring tool for your linux server.
 
