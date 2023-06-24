@@ -25,6 +25,11 @@ type PageData struct {
 	CurrentRoute string
 }
 
+type CpuData struct {
+	CpuUsage float64
+	VirtualMemory float64
+}
+
 func serveStaticFiles() {
 	//serve css
 	styles := http.FileServer(http.Dir("./web/css"))
@@ -64,8 +69,8 @@ func main() {
 	})
 
 	http.HandleFunc("/cpu", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		data := [src.CPUData(false), src.VirtualMemory()]
+		//w.Header().Set("Content-Type", "application/json")
+		data := CpuData{CpuUsage: src.CPUData(false), VirtualMemory: src.VirtualMemory()}
 		response, err := json.Marshal(data)
 		if err != nil {
 			log.Fatal(err)

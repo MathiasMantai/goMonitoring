@@ -60,7 +60,7 @@ func CPUData(perCPU bool) float64 {
 
 
 //Virtual Memory
-func VirtualMemory() {
+func VirtualMemory() float64 {
 	memory, err := mem.VirtualMemory()
 
 	if err != nil {

@@ -2,7 +2,7 @@ var data = {
     labels: ['free', 'in use'],
     datasets: [{
         data: [100,0], // Angenommene Datenwerte
-        backgroundColor: ['#38B3F8', '#ddd']
+        backgroundColor: ['#ddd', '#38B3F8']
     }]
 };
 
@@ -18,19 +18,22 @@ var options = {
         legend: {
             display: false
         },
-    },
-    elements: {
-        center: {
-            text: 'Hallo Welt'
-        }
     }
 };
 
 
 var ctx = document.getElementById('cpuUsage').getContext('2d')
+var ctx2 = document.getElementById('memoryUsage').getContext('2d')
 let cpuPercent = document.getElementById('cpuUsage-percent')
-let text = "t"
+let memoryPercent = document.getElementById('memory-percent')
 let donutChart = new Chart(ctx, {
+    type: 'doughnut',
+    data,
+    options
+})
+
+
+let donutChart2 = new Chart(ctx2, {
     type: 'doughnut',
     data,
     options
@@ -54,14 +57,17 @@ function updateChart(chart, newData)
 
 function getCpuData()
 {
-    fetch("/cpuUsage")
+    fetch("/cpu")
     .then(response => response.json())
     .then(
         (data) => {
             console.log(data)
-            cpu = data[0].toFixed(2)
-            updateChart(donutChart, [parseFloat(100-data), data])
-            cpuPercent.innerHTML = data + "%"
+            cpu = data.CpuUsage.toFixed(2)
+            vMemory = data.VirtualMemory.toFixed(2)
+            updateChart(donutChart, [parseFloat(100-cpu), cpu])
+            updateChart(donutChart2, [parseFloat(100-vMemory), vMemory])
+            cpuPercent.innerHTML = cpu + "%"
+            memoryPercent.innerHTML = vMemory + "%"
         }
     )
 }
