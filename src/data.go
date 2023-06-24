@@ -1,18 +1,17 @@
 package src
 
 import (
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/client"
+	"github.com/shirou/gopsutil/v3/cpu"
+	"github.com/shirou/gopsutil/v3/mem"
+	"golang.org/x/net/context"
 	"log"
 	"strings"
 	"time"
-	"golang.org/x/net/context"
-	"github.com/docker/docker/api/types"
-    "github.com/docker/docker/client"
-	"github.com/shirou/gopsutil/v3/cpu"
-	"github.com/shirou/gopsutil/v3/mem"
 )
 
-func SanitizeContainer(containers []types.Container) []types.Container{
-
+func SanitizeContainer(containers []types.Container) []types.Container {
 
 	length := 12
 	for i := 0; i < len(containers); i++ {
@@ -20,7 +19,7 @@ func SanitizeContainer(containers []types.Container) []types.Container{
 		containers[i].ID = containers[i].ID[0:(length)]
 
 		//replace backslash in container names
-		for j:= 0; j < len(containers[i].Names); j++ {
+		for j := 0; j < len(containers[i].Names); j++ {
 			containers[i].Names[j] = strings.Replace(containers[i].Names[j], "/", "", 1)
 		}
 	}
@@ -34,9 +33,9 @@ func ContainerData() []types.Container {
 	if err != nil {
 		log.Fatal(err)
 	}
-    options := types.ContainerListOptions{
-        All: true, // Include stopped containers as well
-    }
+	options := types.ContainerListOptions{
+		All: true, // Include stopped containers as well
+	}
 
 	containers, err := cli.ContainerList(context.Background(), options)
 
@@ -48,7 +47,7 @@ func ContainerData() []types.Container {
 	return SanitizeContainer(containers)
 }
 
-//Cpu usage
+// Cpu usage
 func CPUData(perCPU bool) float64 {
 	percent, err := cpu.Percent(time.Second, perCPU)
 	if err != nil {
@@ -58,8 +57,7 @@ func CPUData(perCPU bool) float64 {
 	return percent[0]
 }
 
-
-//Virtual Memory
+// Virtual Memory
 func VirtualMemory() float64 {
 	memory, err := mem.VirtualMemory()
 
