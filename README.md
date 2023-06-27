@@ -9,8 +9,7 @@ Currently goMonitoring supports the following
 - Display cpu usage in semi realtime
 - Display Memory
 - Display general information about your system (host, os, system uptime, etc.)
+- Start and Stop your docker container
 
 ## Planned features
-- Start and Stop your docker container
-- Display virtual memory usage
 - Display information about your network interfaces
