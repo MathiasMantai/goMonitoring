@@ -63,7 +63,7 @@ func main() {
 			Body:         src.HostInfo(),
 			CurrentRoute: "/",
 		}
-		renderTemplateWithContent(w, data, pages...)
+		renderTemplateWithContent(w, data, nil, pages...)
 	})
 
 	http.HandleFunc("/cpu", func(w http.ResponseWriter, r *http.Request) {
@@ -78,12 +78,27 @@ func main() {
 
 	//container route
 	http.HandleFunc("/container", func(w http.ResponseWriter, r *http.Request) {
+		
+		//get url param
+		urlParam := r.URL.Query()
+		if urlParam["action"] != nil {
+			action := urlParam["action"][0]
+			containerId := urlParam["container"][0]
+
+			if action == "start" {
+				src.StartContainer(containerId)
+			} else {
+				src.StopContainer(containerId)
+			}
+		}
+		
+		//get pagedata
 		data := PageData{
 			Title:        "Monitoring",
 			Body:         src.ContainerData(),
 			CurrentRoute: "/container",
 		}
-		renderTemplateWithContent(w, data, pages...)
+		renderTemplateWithContent(w, data, nil, pages...)
 	})
 
 	//network route
@@ -93,7 +108,7 @@ func main() {
 			Body:         "Test",
 			CurrentRoute: "/network",
 		}
-		renderTemplateWithContent(w, data, pages...)
+		renderTemplateWithContent(w, data, nil, pages...)
 	})
 
 	//serve static files
@@ -118,8 +133,11 @@ func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
 	}
 }
 
-func renderTemplateWithContent(w http.ResponseWriter, data interface{}, content ...string) {
+func renderTemplateWithContent(w http.ResponseWriter, data interface{}, function func(interface{}) interface{}, content ...string) {
 	t, err := template.ParseFiles(content...)
+
+
+
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

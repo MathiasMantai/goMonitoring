@@ -18,13 +18,14 @@ type FormattedTime struct {
 	Seconds int32
 }
 
+func ShortenContainerId(id string) string {
+	return id[0:12]
+}
+
 func SanitizeContainer(containers []types.Container) []types.Container {
 
-	length := 12
-	for i := 0; i < len(containers); i++ {
-		//shorten container id
-		containers[i].ID = containers[i].ID[0:(length)]
 
+	for i := 0; i < len(containers); i++ {
 		//replace backslash in container names
 		for j := 0; j < len(containers[i].Names); j++ {
 			containers[i].Names[j] = strings.Replace(containers[i].Names[j], "/", "", 1)

@@ -15,6 +15,9 @@
                 <th class="text-center">
                     State
                 </th>
+                <th class="text-center">
+                    Action
+                </th>
             </tr>
         </thead>
         <tbody class="w-full">
@@ -29,17 +32,24 @@
                             {{end}}
                         </ul>
                     </td>
-                    <td class="px-6 py-3">
+                    <td class="px-6 py-3 w-[360px] break-all">
                         {{.ID}}
                     </td>
                     <td class="px-6 py-3">
                         {{.Status}}
                     </td>
-                    <td class="flex justify-center items-center px-6 py-3">
+                    <td class="px-6 py-3">
                         {{if eq .State "running"}}
-                            <span class="rounded-full bg-green-500 w-[15px] h-[15px]"></span>
+                            <div class="rounded-full bg-green-500 w-[15px] h-[15px]"></div>
                         {{else}}
-                            <span class="rounded-full bg-red-500 w-[15px] h-[15px]"></span>
+                            <div class="rounded-full bg-red-500 w-[15px] h-[15px]"></div>
+                        {{end}}
+                    </td>
+                    <td class="px-6 py-3">
+                        {{if eq .State "running"}}
+                            <a href="/container?action=stop&container={{.ID}}" class="flex text-center justify-center"><img src="/img/pause-circle.svg"></a>
+                        {{else}}
+                        <a href="/container?action=start&container={{.ID}}" class="text-center"><img src="/img/play-circle.svg"></a>
                         {{end}}
                     </td>
                 </tr>
