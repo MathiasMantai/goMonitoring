@@ -47,9 +47,9 @@
                     </td>
                     <td class="px-6 py-3">
                         {{if eq .State "running"}}
-                            <a href="/container?action=stop&container={{.ID}}" class="flex text-center justify-center"><img src="/img/pause-circle.svg"></a>
+                            <a href="/container?action=stop&container={{.ID}}" class="flex text-center justify-center" title="stop container"><img src="/img/pause-circle.svg"></a>
                         {{else}}
-                        <a href="/container?action=start&container={{.ID}}" class="text-center"><img src="/img/play-circle.svg"></a>
+                        <a href="/container?action=start&container={{.ID}}" class="text-center" title="start container"><img src="/img/play-circle.svg"></a>
                         {{end}}
                     </td>
                 </tr>

@@ -91,9 +91,10 @@ func main() {
 			} else {
 				src.StopContainer(containerId)
 			}
+			
+			time.Sleep(time.Second)
 		}
 
-		time.Sleep(time.Second)
 
 		//get pagedata
 		data := PageData{
