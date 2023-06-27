@@ -60,7 +60,7 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		data := PageData{
 			Title:        "Monitoring",
-			Body:         "",
+			Body:         src.HostInfo(),
 			CurrentRoute: "/",
 		}
 		renderTemplateWithContent(w, data, pages...)

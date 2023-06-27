@@ -5,11 +5,18 @@ import (
 	"github.com/docker/docker/client"
 	"github.com/shirou/gopsutil/v3/cpu"
 	"github.com/shirou/gopsutil/v3/mem"
+	"github.com/shirou/gopsutil/v3/host"
 	"golang.org/x/net/context"
 	"log"
 	"strings"
 	"time"
 )
+
+type FormattedTime struct {
+	Hours int32
+	Minutes int32
+	Seconds int32
+}
 
 func SanitizeContainer(containers []types.Container) []types.Container {
 
@@ -66,4 +73,58 @@ func VirtualMemory() float64 {
 	}
 
 	return memory.UsedPercent
+}
+
+func FormatTime(seconds uint64) FormattedTime {
+	time := FormattedTime{
+		Hours:0,
+		Minutes:0,
+		Seconds:0,
+	}
+
+	for seconds > 3600 {
+		time.Hours++
+		seconds -= 3600
+	}
+
+	for seconds > 60 {
+		time.Minutes++
+		seconds -= 60
+	}
+
+	time.Seconds = int32(seconds)
+	return time
+}
+
+type HostInfoStats struct {
+	Hostname string
+	Uptime FormattedTime
+	OS string
+	Platform string
+	PlatformFamily string
+	PlatformVersion string
+	KernelVersion string
+	KernelArch string
+}
+
+func HostInfo() interface{} {
+	hostInfo, err := host.Info()
+
+	if err != nil {
+		log.Fatal("Error getting host data")
+	}
+
+	hostInfoFormatted := HostInfoStats {
+		Hostname: hostInfo.Hostname,
+		Uptime: FormatTime(hostInfo.Uptime),
+		OS: hostInfo.OS,
+		Platform: hostInfo.Platform,
+		PlatformFamily: hostInfo.PlatformFamily,
+		PlatformVersion: hostInfo.PlatformVersion,
+		KernelVersion: hostInfo.KernelVersion,
+		KernelArch: hostInfo.KernelArch,
+	}
+
+
+	return hostInfoFormatted
 }

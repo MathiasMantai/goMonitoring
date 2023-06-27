@@ -1,5 +1,5 @@
 {{define "cpu"}}
-<div class="flex items-center justify-center p-3 gap-3">
+<div class="flex grow items-center justify-center p-3 gap-3 h-[100%]">
     <div class="w-fit h-fit border border-md rounded-md shadow-md p-3 inline-block">
         <div class="flex items-center justify-center">
             <canvas id="cpuUsage" class="h-[8dvh] w-[8dvw] grid z-20"></canvas>
@@ -14,5 +14,55 @@
         </div>
         <div class="text-center">Memory</div>
     </div>
+    <table class="w-[100%] h-[100%]">
+        {{if ne .Body.Hostname ""}}
+        <tr class="w-max border-b-2 hover:bg-slate-200">
+            <td class="">Host: </td>
+            <td>{{.Body.Hostname}}</td>
+        </tr>
+        {{end}}
+        {{if ne .Body.OS ""}}
+        <tr class="w-max border-b-2 hover:bg-slate-200">
+            <td>OS: </td>
+            <td>{{.Body.OS}}</td>
+        </tr>
+        {{end}}
+        {{if ne .Body.Platform ""}}
+        <tr class="w-max border-b-2 hover:bg-slate-200">
+            <td>Platform: </td>
+            <td>
+                {{.Body.Platform}}
+                {{if ne .Body.PlatformVersion ""}}
+                    {{.Body.PlatformVersion}}
+                {{end}}
+            </td>
+        </tr>
+        {{end}}
+        {{if ne .Body.KernelVersion ""}}
+        <tr class="w-max border-b-2 hover:bg-slate-200">
+            <td>Kernel version: </td>
+            <td>{{.Body.KernelVersion}}</td>
+        </tr>
+        {{end}}
+        {{if ne .Body.KernelArch ""}}
+        <tr class="w-max border-b-2 hover:bg-slate-200">
+            <td>Kernel architecture: </td>
+            <td>{{.Body.KernelArch}}</td>
+        </tr>
+        {{end}}
+        {{if ne .Body.Uptime nil }}
+        <tr class="w-max border-b-2 hover:bg-slate-200">
+            <td>Uptime: </td>
+            <td>
+                {{if ne .Body.Uptime.Hours 0 }} 
+                    {{.Body.Uptime.Hours}} h
+                {{end}}
+
+                {{.Body.Uptime.Minutes}} min
+                {{.Body.Uptime.Seconds}} sec
+            </td>
+        </tr>
+        {{end}}
+    </table>
 </div>
 {{end}}
