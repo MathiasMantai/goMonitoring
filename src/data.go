@@ -4,8 +4,8 @@ import (
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
 	"github.com/shirou/gopsutil/v3/cpu"
-	"github.com/shirou/gopsutil/v3/mem"
 	"github.com/shirou/gopsutil/v3/host"
+	"github.com/shirou/gopsutil/v3/mem"
 	"golang.org/x/net/context"
 	"log"
 	"strings"
@@ -13,7 +13,7 @@ import (
 )
 
 type FormattedTime struct {
-	Hours int32
+	Hours   int32
 	Minutes int32
 	Seconds int32
 }
@@ -23,7 +23,6 @@ func ShortenContainerId(id string) string {
 }
 
 func SanitizeContainer(containers []types.Container) []types.Container {
-
 
 	for i := 0; i < len(containers); i++ {
 		//replace backslash in container names
@@ -78,9 +77,9 @@ func VirtualMemory() float64 {
 
 func FormatTime(seconds uint64) FormattedTime {
 	time := FormattedTime{
-		Hours:0,
-		Minutes:0,
-		Seconds:0,
+		Hours:   0,
+		Minutes: 0,
+		Seconds: 0,
 	}
 
 	for seconds > 3600 {
@@ -98,14 +97,14 @@ func FormatTime(seconds uint64) FormattedTime {
 }
 
 type HostInfoStats struct {
-	Hostname string
-	Uptime FormattedTime
-	OS string
-	Platform string
-	PlatformFamily string
+	Hostname        string
+	Uptime          FormattedTime
+	OS              string
+	Platform        string
+	PlatformFamily  string
 	PlatformVersion string
-	KernelVersion string
-	KernelArch string
+	KernelVersion   string
+	KernelArch      string
 }
 
 func HostInfo() interface{} {
@@ -115,17 +114,16 @@ func HostInfo() interface{} {
 		log.Fatal("Error getting host data")
 	}
 
-	hostInfoFormatted := HostInfoStats {
-		Hostname: hostInfo.Hostname,
-		Uptime: FormatTime(hostInfo.Uptime),
-		OS: hostInfo.OS,
-		Platform: hostInfo.Platform,
-		PlatformFamily: hostInfo.PlatformFamily,
+	hostInfoFormatted := HostInfoStats{
+		Hostname:        hostInfo.Hostname,
+		Uptime:          FormatTime(hostInfo.Uptime),
+		OS:              hostInfo.OS,
+		Platform:        hostInfo.Platform,
+		PlatformFamily:  hostInfo.PlatformFamily,
 		PlatformVersion: hostInfo.PlatformVersion,
-		KernelVersion: hostInfo.KernelVersion,
-		KernelArch: hostInfo.KernelArch,
+		KernelVersion:   hostInfo.KernelVersion,
+		KernelArch:      hostInfo.KernelArch,
 	}
-
 
 	return hostInfoFormatted
 }
