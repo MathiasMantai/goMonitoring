@@ -1,8 +1,80 @@
 if(window.location.href.includes("/network"))
 {
+    const latencies = [];
 
+    // Erstelle ein neues Chart.js-Diagramm
+    const ctx = document.getElementById('latencyChart').getContext('2d');
+    const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', 
+                 '10', '11','12','13','14','15','16','17','18','19','20'
+                ],
+        datasets: [
+        {
+            label: 'Latenzzeit (ms)',
+            data: latencies,
+            backgroundColor: '#38B3F8',
+            borderColor: 'rgba(0, 123, 255, 1)',
+            borderWidth: 1,
+            fill: true
+        }
+        ]
+    },
+    options: {
+        animation: {
+            duration: 0,
+        },
+        hover: {
+            animationDuration: 0,
+        },
+        responsiveAnimationDuration: 0,
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: {
+                    display: false
+                }
+            },
+            x: {
+                offset: true,
+                reverse: true,
+                ticks: {
+                    display: false
+                },
+                grid: {
+                    display: false
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                display: false
+            }
+        }
+    }
+    });
+
+    // Render das Diagramm
+    chart.render()
+
+    setInterval(() => {
+        updateLatencyChart(chart)
+    }, 2000)
+
+    function updateLatencyChart(chart)
+    {
+        let data = chart.data.datasets[0].data
+        if(data.length >= 20)
+            data.pop()
+
+        data.unshift(parseInt(Math.random() * 100))
+
+        chart.update()
+    }
 }
-if(window.location.href.includes("/container"))
+else if(window.location.href.includes("/container"))
 {
 
 }
