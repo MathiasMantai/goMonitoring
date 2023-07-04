@@ -32,7 +32,7 @@ func FilterNetworkInterfaces(interfaces *[]net.Interface) string {
 
 			for _, addr := range addrs {
 				ipNet, ok := addr.(*net.IPNet)
-				if ok && !ipNet.IP.IsLoopback() && ipNet.IP.To4() != nil {
+				if ok && !ipNet.IP.IsLoopback() && ipNet.IP.To4() != nil && ipNet.IP.To4()[0] != 172 {
 					activeInterface = iface.Name
 					break
 				}
