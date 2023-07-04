@@ -106,9 +106,11 @@ func main() {
 
 	//network route
 	http.HandleFunc("/network", func(w http.ResponseWriter, r *http.Request) {
+		inter := src.GetNetworkInterfaces()
+		activeInterface := src.FilterNetworkInterfaces(&inter)
 		data := PageData{
 			Title:        "Monitoring",
-			Body:         "Test",
+			Body: activeInterface,
 			CurrentRoute: "/network",
 		}
 		renderTemplateWithContent(w, data, nil, pages...)
