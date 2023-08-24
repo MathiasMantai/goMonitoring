@@ -3,7 +3,7 @@ package main
 /*
 	project: goMonitoring
 	version: 1.1
-	author: Mathias Mantai <mmantaibusiness@gmail.com>
+	author : Mathias Mantai <mmantaibusiness@gmail.com>
 */
 
 import (
