@@ -3,7 +3,6 @@ package src
 import (
 	"context"
 	"github.com/docker/docker/api/types"
-	// "github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/client"
 	"log"
 	"strings"
@@ -65,9 +64,6 @@ func StopContainer(containerId string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	// options := container.StopOptions{}
-	// err = cli.ContainerStop(context.Background(), containerId, container.StopOptions{})
 
 	err = cli.ContainerKill(context.Background(), containerId, "")
 	if err != nil {

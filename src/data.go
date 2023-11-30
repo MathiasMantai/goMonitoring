@@ -44,12 +44,12 @@ func FormatTime(seconds uint64) FormattedTime {
 		Seconds: 0,
 	}
 
-	for seconds > 3600 {
+	for seconds >= 3600 {
 		time.Hours++
 		seconds -= 3600
 	}
 
-	for seconds > 60 {
+	for seconds >= 60 {
 		time.Minutes++
 		seconds -= 60
 	}

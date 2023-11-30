@@ -17,7 +17,7 @@ import (
 )
 
 const (
-	port = "8080"
+	port = "8055"
 )
 
 type PageData struct {
@@ -120,7 +120,7 @@ func main() {
 	serveStaticFiles()
 
 	fmt.Println("starting webserver on port " + port)
-	http.ListenAndServe(":"+port, nil)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
