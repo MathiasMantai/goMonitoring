@@ -8,3 +8,5 @@ services:
       dockerfile: Dockerfile
     ports:
       - "7879:8055" # Ändere die Portzuweisung nach Bedarf
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
